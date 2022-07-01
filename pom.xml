@@ -83,7 +83,7 @@
                     <execution>
                         <phase>process-resources</phase>
                         <goals>
-                            <goal>dropAll</goal>
+                            <goal>clearCheckSums</goal>
                             <goal>update</goal>
                         </goals>
                     </execution>
