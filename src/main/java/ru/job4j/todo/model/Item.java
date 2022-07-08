@@ -2,6 +2,8 @@ package ru.job4j.todo.model;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Table(name = "items")
@@ -24,9 +26,9 @@ public class Item {
         this.done = false;
     }
 
-    public Item(String description, Timestamp created) {
+    public Item(String description) {
         this.description = description;
-        this.created = created;
+        this.created = Timestamp.valueOf(LocalDateTime.now());
         this.done = false;
     }
 
@@ -46,8 +48,8 @@ public class Item {
         this.description = description;
     }
 
-    public Timestamp getCreated() {
-        return created;
+    public String getCreated() {
+        return created.toLocalDateTime().format(DateTimeFormatter.ofPattern("MM-dd-yy HH:mm"));
     }
 
     public void setCreated(Timestamp created) {
@@ -77,5 +79,14 @@ public class Item {
     @Override
     public int hashCode() {
         return id;
+    }
+
+    @Override
+    public String toString() {
+        return "Item{"
+                + "description='" + description + '\''
+                + ", created=" + created
+                + ", done=" + done
+                + '}';
     }
 }

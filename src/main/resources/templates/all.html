@@ -30,8 +30,25 @@
             </div>
         </div>
     </nav>
-
-
+    <div class="row">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col" width="50%">Задача</th>
+                <th scope="col">Создано</th>
+                <th scope="col">Выполнено</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item: ${items}">
+                <td th:text="${item.description}" />
+                <td th:text="${item.created}" /></td>
+                <td th:if="${item.done == true}">&#10003</td>
+                <td th:if="${item.done == false}">&#10007</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 
 </div>
 </body>

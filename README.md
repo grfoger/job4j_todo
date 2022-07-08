@@ -1,6 +1,6 @@
 ## 1. О проекте:
 Приложение "TODO list"
-Стек технологий: Spring boot, Thymeleaf, Bootstrap, Hibernate, PostgreSql
+Стек технологий: Spring boot, Thymeleaf, Bootstrap, Hibernate, PostgreSql, Liquibase
 
 Виды.
 - Страница со списком всех заданий. В таблице отображаем имя, дату создания и состояние (выполнено или нет)
