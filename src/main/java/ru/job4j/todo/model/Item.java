@@ -13,13 +13,13 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String description;
-    private Timestamp created;
+    private LocalDateTime created;
     private boolean done;
 
     public Item() {
     }
 
-    public Item(int id, String description, Timestamp created) {
+    public Item(int id, String description, LocalDateTime created) {
         this.id = id;
         this.description = description;
         this.created = created;
@@ -28,7 +28,7 @@ public class Item {
 
     public Item(String description) {
         this.description = description;
-        this.created = Timestamp.valueOf(LocalDateTime.now());
+        this.created = LocalDateTime.now();
         this.done = false;
     }
 
@@ -48,11 +48,11 @@ public class Item {
         this.description = description;
     }
 
-    public String getCreated() {
-        return created.toLocalDateTime().format(DateTimeFormatter.ofPattern("MM-dd-yy HH:mm"));
+    public LocalDateTime getCreated() {
+        return created;
     }
 
-    public void setCreated(Timestamp created) {
+    public void setCreated(LocalDateTime created) {
         this.created = created;
     }
 

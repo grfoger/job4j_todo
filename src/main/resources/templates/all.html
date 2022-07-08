@@ -41,8 +41,8 @@
             </thead>
             <tbody>
             <tr th:each="item: ${items}">
-                <td th:text="${item.description}" />
-                <td th:text="${item.created}" /></td>
+                <td th:text="${item.description}"></td>
+                <td th:text="${#temporals.format(item.created, 'dd.MM.yy HH:mm')}"></td>
                 <td th:if="${item.done == true}">&#10003</td>
                 <td th:if="${item.done == false}">&#10007</td>
             </tr>
