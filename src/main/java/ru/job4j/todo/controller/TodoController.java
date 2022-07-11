@@ -28,6 +28,24 @@ public class TodoController {
         return "all";
     }
 
+    @GetMapping("/all")
+    public String all(Model model) {
+        model.addAttribute("items", itemService.readAll());
+        return "all";
+    }
+
+    @GetMapping("/done")
+    public String done(Model model) {
+        model.addAttribute("items", itemService.readAllDone());
+        return "done";
+    }
+
+    @GetMapping("/new")
+    public String newTasks(Model model) {
+        model.addAttribute("items", itemService.readAllNew());
+        return "new";
+    }
+
     @GetMapping("/addTask")
     public String addTask() {
         return "addTask";
