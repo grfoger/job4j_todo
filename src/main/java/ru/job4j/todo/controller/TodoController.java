@@ -3,20 +3,40 @@ package ru.job4j.todo.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import ru.job4j.todo.model.Item;
+import ru.job4j.todo.service.ItemService;
 
 import javax.servlet.http.HttpSession;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 public class TodoController {
 
+    private final ItemService itemService;
+
+    public TodoController(ItemService itemService) {
+        this.itemService = itemService;
+    }
+
     @GetMapping("/index")
     public String index(Model model) {
-        List<Item> items = new ArrayList<>();
-        items.add(new Item("Сделать дело"));
-        model.addAttribute("items", items);
+        model.addAttribute("items", itemService.readAll());
         return "all";
+    }
+
+    @GetMapping("/addTask")
+    public String addTask() {
+        return "addTask";
+    }
+
+    @PostMapping("/addTask")
+    public String newTask(@ModelAttribute Item item) {
+        item.setCreated(LocalDateTime.now());
+        itemService.create(item);
+        return "redirect:/index";
     }
 }
