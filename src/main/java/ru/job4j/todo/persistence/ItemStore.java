@@ -71,7 +71,7 @@ public class ItemStore {
         return oldItem;
     }
 
-    private boolean delete(int id) {
+    public boolean delete(int id) {
         Session session = sf.openSession();
         session.beginTransaction();
 

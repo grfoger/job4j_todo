@@ -32,4 +32,22 @@ public class ItemService {
     public Collection<Item> readAllNew() {
         return itemStore.readAll().stream().filter(x -> x.getCreated().isAfter(LocalDateTime.now().minusDays(1))).toList();
     }
+
+    public Item findById(int id) {
+        return itemStore.readById(id);
+    }
+
+    public Item doneTask(int id) {
+        Item item = itemStore.readById(id);
+        item.setDone(true);
+        return itemStore.update(id, item);
+    }
+
+    public boolean deleteTask(int id) {
+        return itemStore.delete(id);
+    }
+
+    public Item update(Item item) {
+        return itemStore.update(item.getId(), item);
+    }
 }

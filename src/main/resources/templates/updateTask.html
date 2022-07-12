@@ -15,13 +15,13 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
-    <title>Список задач</title>
+    <title>Описание задачи</title>
 </head>
 <body>
 <div class="container">
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="navbar-brand">Список задач</div>
+        <div class="navbar-brand">Описание задачи</div>
         <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
             <div class="navbar-nav">
                 <a class="nav-item nav-link active" th:href="@{/index}">Все задачи</a>
@@ -30,33 +30,30 @@
             </div>
         </div>
     </nav>
-    <div class="row">
-        <table class="table">
-            <thead>
-            <tr>
-                <th scope="col" width="50%">Задача</th>
-                <th scope="col">Создано</th>
-                <th scope="col">Выполнено</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="item: ${items}">
-                <td>
-                    <a th:href="@{|/task/${item.id}|}" th:text="${item.description.length() > 50 ? item.description.substring(0,50) + '...' : item.description}">
-                    </a>
-                </td>
-                <td th:text="${#temporals.format(item.created, 'dd.MM.yy HH:mm')}"></td>
-                <td th:if="${item.done == true}">&#10003</td>
-                <td th:if="${item.done == false}">&#10007</td>
-            </tr>
-            </tbody>
-        </table>
+
+    <div class="row pt-3">
+        <div class="card">
+            <form th:action="@{/updateTask}" method="POST" th:object="${item}">
+                <input type="hidden" name="id" th:field="*{id}"/>
+                <input type="hidden" name="created" th:field="*{created}"/>
+                <input type="hidden" name="done" th:field="*{done}"/>
+                <div class="card-header" th:if="${item.done == true}"
+                 th:text="'Создано: '+${#temporals.format(item.created, 'dd.MM.yy HH:mm')}+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#10003 Выполнено'">
+                </div>
+                <div class="card-header" th:if="${item.done == false}"
+                 th:text="'Создано: '+${#temporals.format(item.created, 'dd.MM.yy HH:mm')}+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#10007 Не выполнено'">
+                </div>
+                <div class="card-body">
+                    <input type="text" class="form-control" name="description" th:field="*{description}">
+                </div>
+                <div class="pt-3 card-footer">
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                </div>
+            </form>
+        </div>
     </div>
-    <div class="form-group">
-        <form action="/addTask">
-            <button class="btn btn-primary" type="submit">Добавить задачу</button>
-        </form>
-    </div>
+
+
 </div>
 </body>
 </html>
