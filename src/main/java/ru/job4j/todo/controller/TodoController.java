@@ -81,6 +81,7 @@ public class TodoController {
     @GetMapping("/deleteTask/{itemId}")
     public String deleteTask(Model model, @PathVariable("itemId") int id) {
         itemService.deleteTask(id);
+        model.addAttribute("items", itemService.readAll());
         return "all";
     }
 

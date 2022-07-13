@@ -32,7 +32,7 @@
     </nav>
 
     <div class="row pt-3">
-        <div class="card">
+        <div class="card" style="width: 60%">
             <form th:action="@{/updateTask}" method="POST" th:object="${item}">
                 <input type="hidden" name="id" th:field="*{id}"/>
                 <input type="hidden" name="created" th:field="*{created}"/>
@@ -44,12 +44,14 @@
                  th:text="'Создано: '+${#temporals.format(item.created, 'dd.MM.yy HH:mm')}+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#10007 Не выполнено'">
                 </div>
                 <div class="card-body">
-                    <input type="text" class="form-control" name="description" th:field="*{description}">
+                    <textarea rows="10" type="text" class="form-control" name="description" th:field="*{description}">
+                    </textarea>
                 </div>
                 <div class="pt-3 card-footer">
                     <button type="submit" class="btn btn-primary">Сохранить</button>
                 </div>
             </form>
+
         </div>
     </div>
 
