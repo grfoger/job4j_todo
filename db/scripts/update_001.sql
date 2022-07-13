@@ -5,4 +5,3 @@ create table if not exists items(
                      done boolean
 );
 
-insert into items(description, created, done) values ('Большое дело', '01.02.03 12:00', FALSE);
