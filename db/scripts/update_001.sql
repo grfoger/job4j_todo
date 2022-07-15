@@ -5,3 +5,10 @@ create table if not exists items(
                      done boolean
 );
 
+create table if not exists account(
+                                    id serial primary key,
+                                    name varchar(255),
+                                    login varchar(255),
+                                    password varchar(255)
+);
+

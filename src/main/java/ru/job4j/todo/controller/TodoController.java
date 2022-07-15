@@ -56,7 +56,7 @@ public class TodoController {
     public String newTask(@ModelAttribute Item item) {
         item.setCreated(LocalDateTime.now());
         itemService.create(item);
-        return "redirect:/index";
+        return "redirect:/all";
     }
 
     @GetMapping("/task/{itemId}")

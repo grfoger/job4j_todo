@@ -6,7 +6,9 @@ import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 import ru.job4j.todo.model.Item;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.function.Function;
 
 @Repository
 public class ItemStore {
@@ -17,60 +19,44 @@ public class ItemStore {
         this.sf = sf;
     }
 
-    public Item create(Item item) {
+    private <T> T tx(Function<Session, T> command) {
         Session session = sf.openSession();
         session.beginTransaction();
-        session.save(item);
+        T result = command.apply(session);
         session.getTransaction().commit();
         session.close();
+        return result;
+    }
+
+    public Item create(Item item) {
+        tx(session -> session.save(item));
         return item;
     }
 
     public Item readById(int id) {
-        Session session = sf.openSession();
-        session.beginTransaction();
-
-        Item item = session.get(Item.class, id);
-
-        session.getTransaction().commit();
-        session.close();
-        return item;
+        return (Item) tx(session -> session.get(Item.class, id));
     }
 
-    public List<Item> readAll() {
-        Session session = sf.openSession();
-        session.beginTransaction();
-
-        List list = session.createQuery("from Item").list();
-
-        session.getTransaction().commit();
-        session.close();
-        return list;
+    public Collection<Item> readAll() {
+        return (Collection<Item>) tx(session -> session.createQuery("from Item").list());
     }
 
     public Item update(int id, Item item) {
         Item oldItem = readById(id);
-        Session session = sf.openSession();
-        session.beginTransaction();
-
         item.setId(id);
-        session.update(item);
-
-        session.getTransaction().commit();
-        session.close();
+        tx(session -> {
+            session.update(item);
+            return null;
+        });
         return oldItem;
     }
 
     public boolean delete(int id) {
-        Session session = sf.openSession();
-        session.beginTransaction();
-
-        Query query = session.createQuery("delete from Item where id = :id")
-                .setParameter("id", id);
-        int result = query.executeUpdate();
-
-        session.getTransaction().commit();
-        session.close();
+        int result = tx(session -> {
+            Query query = session.createQuery("delete from Item where id = :id")
+                    .setParameter("id", id);
+            return query.executeUpdate();
+        });
         return result != 0;
     }
 }
