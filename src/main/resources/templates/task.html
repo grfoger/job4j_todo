@@ -42,11 +42,20 @@
             <div class="card-body"  th:text="${item.description}">
             </div>
             <div class="pt-3 card-footer">
-                <a th:href="@{|/doneTask/${item.id}|}" class="btn btn-primary">Выполнено</a>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <a th:href="@{|/updateTask/${item.id}|}" class="btn btn-secondary">Отредактировать</a>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <a th:href="@{|/deleteTask/${item.id}|}" class="btn btn-secondary">Удалить</a>
+                <form th:action="@{/doneTask}" method="POST" th:object="${item}">
+                    <div th:if="${item.done == false}" style="display: inline-block">
+                    <input type="hidden" name="id" th:field="*{id}"/>
+                    <input type="hidden" name="description" th:field="*{description}"/>
+                    <input type="hidden" name="created" th:field="*{created}"/>
+                    <input type="hidden" name="done" value="true"/>
+                    <button type="submit" class="btn btn-primary">Выполнено</button>
+                        &nbsp;&nbsp;
+                    </div>
+                    <a th:href="@{|/updateTask/${item.id}|}" class="btn btn-secondary">Отредактировать</a>
+                    &nbsp;&nbsp;
+                    <a th:href="@{|/deleteTask/${item.id}|}" class="btn btn-secondary">Удалить</a>
+                </form>
+
             </div>
         </div>
 

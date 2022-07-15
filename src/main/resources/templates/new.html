@@ -41,7 +41,10 @@
             </thead>
             <tbody>
             <tr th:each="item: ${items}">
-                <td th:text="${item.description.length() > 50 ? item.description.substring(0,50) + '...' : item.description}"></td>
+                <td>
+                    <a th:href="@{|/task/${item.id}|}" th:text="${item.description.length() > 50 ? item.description.substring(0,50) + '...' : item.description}">
+                    </a>
+                </td>
                 <td th:text="${#temporals.format(item.created, 'dd.MM.yy HH:mm')}"></td>
                 <td th:if="${item.done == true}">&#10003</td>
                 <td th:if="${item.done == false}">&#10007</td>

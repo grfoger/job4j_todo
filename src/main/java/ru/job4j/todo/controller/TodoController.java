@@ -65,11 +65,11 @@ public class TodoController {
         return "task";
     }
 
-    @GetMapping("/doneTask/{itemId}")
-    public String doneTask(Model model, @PathVariable("itemId") int id) {
-        itemService.doneTask(id);
+    @PostMapping("/doneTask")
+    public String doneTask(Model model, @ModelAttribute Item item) {
         model.addAttribute("items", itemService.readAllDone());
-        return "done";
+        itemService.update(item);
+        return "redirect:/done";
     }
 
     @GetMapping("/updateTask/{itemId}")
