@@ -12,22 +12,22 @@
 - Кнопка редактировать переводит пользователя на отдельную страницу для редактирования.
 - Кнопка удалить, удаляет задание и переходит на список всех заданий.
 
-<img src="C:\projects\job4j_todo\src\main\resources\images\new.JPG" width="600"/>
+<img src="https://github.com/grfoger/job4j_todo/blob/master/src/main/resources/images/new.JPG" width="600"/>
 <br/>
 
-<img src="C:\projects\job4j_todo\src\main\resources\images\all.JPG" width="600"/>
+<img src="https://github.com/grfoger/job4j_todo/blob/master/src/main/resources/images/all.JPG" width="600"/>
 <br/>
 
-<img src="C:\projects\job4j_todo\src\main\resources\images\done.JPG" width="600"/>
+<img src="https://github.com/grfoger/job4j_todo/blob/master/src/main/resources/images/done.JPG" width="600"/>
 <br/>
 
-<img src="C:\projects\job4j_todo\src\main\resources\images\add.JPG" width="600"/>
+<img src="https://github.com/grfoger/job4j_todo/blob/master/src/main/resources/images/add.JPG" width="600"/>
 <br/>
 
-<img src="C:\projects\job4j_todo\src\main\resources\images\task.JPG" width="600"/>
+<img src="https://github.com/grfoger/job4j_todo/blob/master/src/main/resources/images/task.JPG" width="600"/>
 <br/>
 
-<img src="C:\projects\job4j_todo\src\main\resources\images\update.JPG" width="600"/>
+<img src="https://github.com/grfoger/job4j_todo/blob/master/src/main/resources/images/update.JPG" width="600"/>
 <br/>
 
 ### 2. Сборка: 

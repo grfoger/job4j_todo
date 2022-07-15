@@ -52,17 +52,7 @@ public class ItemStore {
         Item oldItem = readById(id);
         Session session = sf.openSession();
         session.beginTransaction();
-        /*
-        Query query = session.createQuery("update Item i set "
-                + "i.description = :description, "
-                + "i.created = :created, "
-                + "i.done = :done "
-                + "where i.id = :id")
-                .setParameter("description", item.getDescription())
-                .setParameter("created", item.getCreated())
-                .setParameter("done", item.isDone())
-                .setParameter("id", id);
-        */
+
         item.setId(id);
         session.update(item);
 
