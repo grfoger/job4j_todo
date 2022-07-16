@@ -2,6 +2,7 @@ package ru.job4j.todo.persistence;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 import ru.job4j.todo.model.Item;
@@ -19,13 +20,19 @@ public class ItemStore {
         this.sf = sf;
     }
 
-    private <T> T tx(Function<Session, T> command) {
-        Session session = sf.openSession();
-        session.beginTransaction();
-        T result = command.apply(session);
-        session.getTransaction().commit();
-        session.close();
-        return result;
+    private <T> T tx(final Function<Session, T> command) {
+        final Session session = sf.openSession();
+        final Transaction tx = session.beginTransaction();
+        try {
+            T rsl = command.apply(session);
+            tx.commit();
+            return rsl;
+        } catch (final Exception e) {
+            session.getTransaction().rollback();
+            throw e;
+        } finally {
+            session.close();
+        }
     }
 
     public Item create(Item item) {
