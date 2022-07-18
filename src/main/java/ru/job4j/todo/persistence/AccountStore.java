@@ -5,17 +5,17 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
-import ru.job4j.todo.model.Item;
+import ru.job4j.todo.model.Account;
 
 import java.util.Collection;
 import java.util.function.Function;
 
 @Repository
-public class ItemStore {
+public class AccountStore {
 
     private final SessionFactory sf;
 
-    public ItemStore(SessionFactory sf) {
+    public AccountStore(SessionFactory sf) {
         this.sf = sf;
     }
 
@@ -34,32 +34,32 @@ public class ItemStore {
         }
     }
 
-    public Item create(Item item) {
-        tx(session -> session.save(item));
-        return item;
+    public Account create(Account acc) {
+        tx(session -> session.save(acc));
+        return acc;
     }
 
-    public Item readById(int id) {
-        return (Item) tx(session -> session.get(Item.class, id));
+    public Account readById(int id) {
+        return (Account) tx(session -> session.get(Account.class, id));
     }
 
-    public Collection<Item> readAll() {
-        return (Collection<Item>) tx(session -> session.createQuery("from Item").list());
+    public Collection<Account> readAll() {
+        return (Collection<Account>) tx(session -> session.createQuery("from Account").list());
     }
 
-    public Item update(int id, Item item) {
-        Item oldItem = readById(id);
-        item.setId(id);
+    public Account update(int id, Account acc) {
+        Account oldAcc = readById(id);
+        acc.setId(id);
         tx(session -> {
-            session.update(item);
+            session.update(acc);
             return null;
         });
-        return oldItem;
+        return oldAcc;
     }
 
     public boolean delete(int id) {
         int result = tx(session -> {
-            Query query = session.createQuery("delete from Item where id = :id")
+            Query query = session.createQuery("delete from Account where id = :id")
                     .setParameter("id", id);
             return query.executeUpdate();
         });
