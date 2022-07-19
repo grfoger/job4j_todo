@@ -15,13 +15,13 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
-    <title>Добавить задачу</title>
+    <title>Войти</title>
 </head>
 <body>
 <div class="container">
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand">Добавление задачи</a>
+        <a class="navbar-brand">Вход в систему</a>
         <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
             <div class="navbar-nav">
                 <a class="nav-item nav-link" th:if="${user.name == 'Гость'}" th:href="@{/login}">
@@ -41,17 +41,22 @@
     <div class="row">
         <div class="card" style="width: 100%">
             <div class="card-header">
-                Новая задача.
+                Авторизация
             </div>
             <div class="card-body">
-                <form th:action="@{/addTask}" method="POST" th:object="${item}">
-                    <input type="hidden" name="id" value="0"/>
-                    <input type="hidden" name="done" value="false"/>
+                <div th:if="${fail}" class="alert alert-danger" role="alert">
+                    Логин или пароль введены не верно!
+                </div>
+                <form th:action="@{/login}" method="POST">
                     <div class="form-group">
-                        <label for="description">Описание</label>
-                        <input type="text" class="form-control" name="description" id="description">
+                        <label>Логин</label>
+                        <input type="text" class="form-control" name="login">
                     </div>
-                    <button type="submit" class="btn btn-primary">Добавить</button>
+                    <div class="form-group">
+                        <label>Пароль</label>
+                        <input type="text" class="form-control" name="password">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Войти</button>
                 </form>
             </div>
         </div>
