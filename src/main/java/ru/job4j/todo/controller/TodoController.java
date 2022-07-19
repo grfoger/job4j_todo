@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import ru.job4j.todo.model.Account;
 import ru.job4j.todo.model.Item;
 import ru.job4j.todo.service.ItemService;
 
@@ -23,32 +24,46 @@ public class TodoController {
         this.itemService = itemService;
     }
 
+    private Account getAccount(HttpSession session) {
+        Account user = (Account) session.getAttribute("acc");
+        if (user == null) {
+            user = new Account();
+            user.setName("Гость");
+        }
+        return user;
+    }
+
     @GetMapping("/index")
-    public String index(Model model) {
+    public String index(Model model, HttpSession session) {
+        model.addAttribute("user", getAccount(session));
         model.addAttribute("items", itemService.readAll());
         return "all";
     }
 
     @GetMapping("/all")
-    public String all(Model model) {
+    public String all(Model model, HttpSession session) {
+        model.addAttribute("user", getAccount(session));
         model.addAttribute("items", itemService.readAll());
         return "all";
     }
 
     @GetMapping("/done")
-    public String done(Model model) {
+    public String done(Model model, HttpSession session) {
+        model.addAttribute("user", getAccount(session));
         model.addAttribute("items", itemService.readAllDone());
         return "done";
     }
 
     @GetMapping("/new")
-    public String newTasks(Model model) {
+    public String newTasks(Model model, HttpSession session) {
+        model.addAttribute("user", getAccount(session));
         model.addAttribute("items", itemService.readAllNew());
         return "new";
     }
 
     @GetMapping("/addTask")
-    public String addTask() {
+    public String addTask(Model model, HttpSession session) {
+        model.addAttribute("user", getAccount(session));
         return "addTask";
     }
 
@@ -60,7 +75,8 @@ public class TodoController {
     }
 
     @GetMapping("/task/{itemId}")
-    public String task(Model model, @PathVariable("itemId") int id) {
+    public String task(Model model, @PathVariable("itemId") int id, HttpSession session) {
+        model.addAttribute("user", getAccount(session));
         model.addAttribute("item", itemService.findById(id));
         return "task";
     }
@@ -73,13 +89,15 @@ public class TodoController {
     }
 
     @GetMapping("/updateTask/{itemId}")
-    public String updateTask(Model model, @PathVariable("itemId") int id) {
+    public String updateTask(Model model, @PathVariable("itemId") int id, HttpSession session) {
+        model.addAttribute("user", getAccount(session));
         model.addAttribute("item", itemService.findById(id));
         return "updateTask";
     }
 
     @GetMapping("/deleteTask/{itemId}")
-    public String deleteTask(Model model, @PathVariable("itemId") int id) {
+    public String deleteTask(Model model, @PathVariable("itemId") int id, HttpSession session) {
+        model.addAttribute("user", getAccount(session));
         itemService.deleteTask(id);
         model.addAttribute("items", itemService.readAll());
         return "all";

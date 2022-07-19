@@ -16,6 +16,9 @@ public class Account {
 
     private String password;
 
+    public Account() {
+    }
+
     public Account(int id, String name, String login, String password) {
         this.id = id;
         this.name = name;

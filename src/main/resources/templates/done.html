@@ -24,6 +24,14 @@
         <a class="navbar-brand">Список выполненных задач</a>
         <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
             <div class="navbar-nav">
+                <a class="nav-item nav-link" th:if="${user.name == 'Гость'}" th:href="@{/login}">
+                    <span th:text="${user.name}"></span>
+                    <span> | Войти | </span>
+                </a>
+                <a class="nav-item nav-link" th:if="${user.name != 'Гость'}" th:href="@{/logout}">
+                    <span th:text="${user.name}"></span>
+                    <span> | Выйти | </span>
+                </a>
                 <a class="nav-item nav-link" th:href="@{/index}">Все задачи</a>
                 <a class="nav-item nav-link" th:href="@{/new}">Новые</a>
                 <a class="nav-item nav-link active" th:href="@{/done}">Выполненные</a>
