@@ -82,4 +82,14 @@ public class Account {
     public int hashCode() {
         return id;
     }
+
+    @Override
+    public String toString() {
+        return "Account{"
+                + "id=" + id
+                + ", name='" + name + '\''
+                + ", login='" + login + '\''
+                + ", password='" + password + '\''
+                + '}';
+    }
 }

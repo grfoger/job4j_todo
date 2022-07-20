@@ -24,6 +24,7 @@
         <a class="navbar-brand">Список новых задач</a>
         <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
             <div class="navbar-nav">
+                <a class="nav-item nav-link" th:href="@{/reg}">Зарегистрироваться</a>
                 <a class="nav-item nav-link" th:if="${user.name == 'Гость'}" th:href="@{/login}">
                     <span th:text="${user.name}"></span>
                     <span> | Войти | </span>

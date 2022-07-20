@@ -1,5 +1,6 @@
 package ru.job4j.todo.persistence;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -7,7 +8,9 @@ import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 import ru.job4j.todo.model.Account;
 
+import java.sql.SQLException;
 import java.util.Collection;
+import java.util.Optional;
 import java.util.function.Function;
 
 @Repository
@@ -34,9 +37,14 @@ public class AccountStore {
         }
     }
 
-    public Account create(Account acc) {
-        tx(session -> session.save(acc));
-        return acc;
+    public Optional<Account> create(Account acc) {
+
+        try {
+            tx(session -> session.save(acc));
+        } catch (HibernateException e) {
+            return Optional.empty();
+        }
+        return Optional.of(acc);
     }
 
     public Account readById(int id) {
@@ -64,5 +72,12 @@ public class AccountStore {
             return query.executeUpdate();
         });
         return result != 0;
+    }
+
+
+    public Optional<Account> findUserBy(String login) {
+        return tx(session ->
+                session.createQuery("from Account where login = :login")
+                        .setParameter("login", login).uniqueResultOptional());
     }
 }
