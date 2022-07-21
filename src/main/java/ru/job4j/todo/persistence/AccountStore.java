@@ -74,10 +74,11 @@ public class AccountStore {
         return result != 0;
     }
 
-
-    public Optional<Account> findUserBy(String login) {
+    public Optional<Account> findUserByLoginAndPass(String login, String password) {
         return tx(session ->
-                session.createQuery("from Account where login = :login")
-                        .setParameter("login", login).uniqueResultOptional());
+                session.createQuery("from Account where login = :login AND password = :password")
+                        .setParameter("login", login)
+                        .setParameter("password", password)
+                        .uniqueResultOptional());
     }
 }

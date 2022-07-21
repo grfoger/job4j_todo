@@ -21,10 +21,6 @@ public class AccountService {
     }
 
     public Optional<Account> findUserByLoginAndPass(String login, String password) {
-        Optional<Account> userDb = accStore.findUserBy(login);
-        if (userDb.isPresent() && !password.equals(userDb.get().getPassword())) {
-            return Optional.empty();
-        }
-        return userDb;
+        return accStore.findUserByLoginAndPass(login, password);
     }
 }
