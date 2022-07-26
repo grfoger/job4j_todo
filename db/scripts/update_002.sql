@@ -1,0 +1,1 @@
+Alter table items add column account_id int;
