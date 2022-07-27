@@ -43,7 +43,8 @@
         <table class="table">
             <thead>
             <tr>
-                <th scope="col" width="50%">Задача</th>
+                <th scope="col" width="35%">Задача</th>
+                <th scope="col">Пользователь</th>
                 <th scope="col">Создано</th>
                 <th scope="col">Выполнено</th>
             </tr>
@@ -54,6 +55,7 @@
                     <a th:href="@{|/task/${item.id}|}" th:text="${item.description.length() > 50 ? item.description.substring(0,50) + '...' : item.description}">
                     </a>
                 </td>
+                <td th:text="${item.user.name}"></td>
                 <td th:text="${#temporals.format(item.created, 'dd.MM.yy HH:mm')}"></td>
                 <td th:if="${item.done == true}">&#10003</td>
                 <td th:if="${item.done == false}">&#10007</td>

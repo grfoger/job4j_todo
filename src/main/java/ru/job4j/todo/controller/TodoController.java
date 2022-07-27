@@ -68,8 +68,10 @@ public class TodoController {
     }
 
     @PostMapping("/addTask")
-    public String newTask(@ModelAttribute Item item) {
+    public String newTask(@ModelAttribute Item item, HttpSession session) {
         item.setCreated(LocalDateTime.now());
+        item.setUser((Account) session.getAttribute("acc"));
+        System.out.println(item.toString());
         itemService.create(item);
         return "redirect:/all";
     }

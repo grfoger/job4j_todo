@@ -16,20 +16,26 @@ public class Item {
     private LocalDateTime created;
     private boolean done;
 
+    @ManyToOne
+    @JoinColumn(name = "account_id")
+    private Account user;
+
     public Item() {
     }
 
-    public Item(int id, String description, LocalDateTime created) {
+    public Item(int id, String description, LocalDateTime created, Account user) {
         this.id = id;
         this.description = description;
         this.created = created;
         this.done = false;
+        this.user = user;
     }
 
-    public Item(String description) {
+    public Item(String description, Account user) {
         this.description = description;
         this.created = LocalDateTime.now();
         this.done = false;
+        this.user = user;
     }
 
     public int getId() {
@@ -64,6 +70,14 @@ public class Item {
         this.done = done;
     }
 
+    public Account getUser() {
+        return user;
+    }
+
+    public void setUser(Account user) {
+        this.user = user;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -87,6 +101,7 @@ public class Item {
                 + "description='" + description + '\''
                 + ", created=" + created
                 + ", done=" + done
+                + ", user=" + user.getId()
                 + '}';
     }
 }
