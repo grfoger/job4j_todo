@@ -5,6 +5,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
+import ru.job4j.todo.model.Category;
 import ru.job4j.todo.model.Item;
 
 import java.util.Collection;
@@ -64,5 +65,13 @@ public class ItemStore {
             return query.executeUpdate();
         });
         return result != 0;
+    }
+
+    public Collection<Category> getCategories() {
+        return (Collection<Category>) tx(session -> session.createQuery("from Category").list());
+    }
+
+    public Category getCategoryById(int id) {
+        return (Category) tx(session -> session.get(Category.class, id));
     }
 }

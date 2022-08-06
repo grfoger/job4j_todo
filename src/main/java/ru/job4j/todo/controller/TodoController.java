@@ -2,11 +2,9 @@ package ru.job4j.todo.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import ru.job4j.todo.model.Account;
+import ru.job4j.todo.model.Category;
 import ru.job4j.todo.model.Item;
 import ru.job4j.todo.service.ItemService;
 
@@ -14,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 public class TodoController {
@@ -63,15 +62,16 @@ public class TodoController {
 
     @GetMapping("/addTask")
     public String addTask(Model model, HttpSession session) {
+        model.addAttribute("categories", itemService.getCategories());
         model.addAttribute("user", getAccount(session));
         return "addTask";
     }
 
     @PostMapping("/addTask")
-    public String newTask(@ModelAttribute Item item, HttpSession session) {
+    public String newTask(@ModelAttribute Item item, HttpSession session, @RequestParam(name = "catId") Set<String> catSet) {
         item.setCreated(LocalDateTime.now());
         item.setUser((Account) session.getAttribute("acc"));
-        System.out.println(item.toString());
+        catSet.forEach(x -> item.getCategories().add(itemService.getCategoryById(x)));
         itemService.create(item);
         return "redirect:/all";
     }

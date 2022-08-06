@@ -115,6 +115,7 @@ public class Item {
                 + ", created=" + created
                 + ", done=" + done
                 + ", user=" + user.getId()
+                + ", categories=" + getCategories()
                 + '}';
     }
 }
