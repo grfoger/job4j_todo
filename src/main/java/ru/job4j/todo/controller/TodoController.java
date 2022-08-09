@@ -11,6 +11,7 @@ import ru.job4j.todo.service.ItemService;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -68,10 +69,12 @@ public class TodoController {
     }
 
     @PostMapping("/addTask")
-    public String newTask(@ModelAttribute Item item, HttpSession session, @RequestParam(name = "catId") Set<String> catSet) {
-        item.setCreated(LocalDateTime.now());
+    public String newTask(@ModelAttribute Item item, HttpSession session, @RequestParam(name = "catId", required = false) Set<String> catSet) {
+        item.setCreated(new Date());
         item.setUser((Account) session.getAttribute("acc"));
-        catSet.forEach(x -> item.getCategories().add(itemService.getCategoryById(x)));
+        if (catSet != null) {
+            catSet.forEach(x -> item.getCategories().add(itemService.getCategoryById(x)));
+        }
         itemService.create(item);
         return "redirect:/all";
     }

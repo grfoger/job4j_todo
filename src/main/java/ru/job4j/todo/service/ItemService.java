@@ -6,7 +6,9 @@ import ru.job4j.todo.model.Item;
 import ru.job4j.todo.persistence.ItemStore;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Collection;
+import java.util.Date;
 
 @Service
 public class ItemService {
@@ -31,7 +33,9 @@ public class ItemService {
     }
 
     public Collection<Item> readAllNew() {
-        return itemStore.readAll().stream().filter(x -> x.getCreated().isAfter(LocalDateTime.now().minusDays(1))).toList();
+        return itemStore.readAll().stream().filter(x -> x.getCreated()
+                .after(localDateTimeToDate(LocalDateTime.now().minusDays(1))))
+                .toList();
     }
 
     public Item findById(int id) {
@@ -59,5 +63,9 @@ public class ItemService {
     public Category getCategoryById(String x) {
         int catId = Integer.parseInt(x);
         return itemStore.getCategoryById(catId);
+    }
+
+    private Date localDateTimeToDate(LocalDateTime ldt) {
+        return Date.from(ldt.atZone(ZoneId.systemDefault()).toInstant());
     }
 }

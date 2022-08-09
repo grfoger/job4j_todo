@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,7 +16,8 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String description;
-    private LocalDateTime created;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date created;
     private boolean done;
 
     @ManyToOne
@@ -28,7 +30,7 @@ public class Item {
     public Item() {
     }
 
-    public Item(int id, String description, LocalDateTime created, Account user) {
+    public Item(int id, String description, Date created, Account user) {
         this.id = id;
         this.description = description;
         this.created = created;
@@ -38,7 +40,7 @@ public class Item {
 
     public Item(String description, Account user) {
         this.description = description;
-        this.created = LocalDateTime.now();
+        this.created = new Date();
         this.done = false;
         this.user = user;
     }
@@ -59,11 +61,11 @@ public class Item {
         this.description = description;
     }
 
-    public LocalDateTime getCreated() {
+    public Date getCreated() {
         return created;
     }
 
-    public void setCreated(LocalDateTime created) {
+    public void setCreated(Date created) {
         this.created = created;
     }
 

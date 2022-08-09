@@ -56,7 +56,7 @@
                     </a>
                 </td>
                 <td th:text="${item.user.name}"></td>
-                <td th:text="${#temporals.format(item.created, 'dd.MM.yy HH:mm')}"></td>
+                <td th:text="${#dates.format(item.created, 'dd.MM.yy')}"></td>
                 <td th:if="${item.done == true}">&#10003</td>
                 <td th:if="${item.done == false}">&#10007</td>
             </tr>
